@@ -1,0 +1,26 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Отклик
+{% endblock title %}
+
+{% block content %}
+Текущий пользователь: {{user.username}}
+  <hr>
+    <h4>Отклик от пользователя {{ response.responseAuthor }}</h4>
+    <h4>на Объявление "{{ response.article.title }}"</h4>
+  <hr>
+    <h5>Текст: {{ response.text }}</h5>
+
+  <hr>
+  <a href="{% url 'response_accept' pk=response.id %}">Принять</a>
+  <a href="{% url 'response_reject' pk=response.id %}">Отклонить</a>
+  <a href="{% url 'response_delete' pk=response.id %}">Удалить</a>
+
+  <button>
+     <a class="nav-link" href="{% url 'responses' %}">
+          <strong>Назад</strong>
+      </a>
+  </button>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Объявления
+{% endblock title %}
+
+{% block content %}
+<h1>Объявления</h1>
+<hr>
+{% if articles %}
+    <table>
+        <tr>
+            <td>Автор</td>
+            <td>Заголовок</td>
+            <td>Дата публикации</td>
+            <td>Текст</td>
+        </tr>
+    {% for article in articles %}
+        <tr>
+            <td>{{ article.author }}</td>
+            <td><a href="{% url 'article' pk=article.pk %}">{{ article.title }}</a> </td>
+            <td>{{ article.dateCreation|date:'d M Y' }}</td>
+            <td>{{ article.text|truncatewords:10 }}</td>
+            {# Разрешаем Изменять и Удалять только автору объявления. #}
+            <td>
+                {% if article.author.id == user.id %}
+                    {% if perms.board.change_article %}
+                        <a href="{% url 'article_update' pk=article.pk %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.board.delete_article %}
+                        <a href="{% url 'article_delete' pk=article.pk %}">Удалить</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% else %}
+    <h2>Объявлений нет!</h2>
+{% endif %}
+
+{# Информация о предыдущих страницах #}
+{% if page_obj.has_previous %}
+   <a href="?page=1">1</a>
+   {% if page_obj.previous_page_number != 1 %}
+       ...
+       <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+   {% endif %}
+{% endif %}
+
+{# Информация о текущей странице #}
+{{ page_obj.number }}
+
+{# Информация о следующих страницах #}
+{% if page_obj.has_next %}
+   <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+   {% if paginator.num_pages != page_obj.next_page_number %}
+       ...
+       <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+   {% endif %}
+{% endif %}
+
+{% endblock content %}

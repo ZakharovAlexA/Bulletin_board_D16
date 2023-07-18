@@ -1,0 +1,21 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+<h2> Объявление </h2>>
+<hr>
+{% endblock title %}
+
+{% block content %}
+Текущий пользователь: {{ user.username }}
+<hr>
+<h3> {{ article.title }} </h3> дата публикации: {{ article.dateCreation|date:'d M Y' }}
+<br>
+<hr>
+ {{ article.text }}
+{% if article.upload %}
+    <img src="{{ article.upload.url }}">
+{% endif %}
+<hr>
+<a href="{% url 'response_create' pk=article.id %}">Написать отклик.</a>
+
+{% endblock content %}

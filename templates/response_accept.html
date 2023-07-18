@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Вы приняли отклик!
+{% endblock title %}
+
+{% block content %}
+  <hr>
+  <h1>Вы приняли отклик:</h1>
+  <h2>{{ response.text }}</h2>
+  <hr>
+
+  <button>
+     <a class="nav-link" href="{% url 'articles' %}">
+          <h4><strong>Hазад</strong></h4>
+      </a>
+  </button>
+
+{% endblock content %}
