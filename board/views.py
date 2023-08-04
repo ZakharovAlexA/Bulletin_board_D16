@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import render
