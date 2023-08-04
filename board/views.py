@@ -24,6 +24,12 @@ class ArticleDetail(DetailView):
     template_name = 'article.html'
     context_object_name = 'article'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        article_resp = UserResponse.objects.filter(article__id=self.request.resolver_match.kwargs['pk'])
+        context['article_resp'] = article_resp
+        return context
+
 
 class ArticleCreate(PermissionRequiredMixin, CreateView):
     permission_required = ('board.add_article',)
@@ -61,7 +67,6 @@ class Responses(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['time_now'] = datetime.utcnow()
         myresp = UserResponse.objects.filter(article__author=self.request.user)
         context['myresp'] = myresp
         return context

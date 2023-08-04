@@ -18,4 +18,43 @@
 <hr>
 <a href="{% url 'response_create' pk=article.id %}">Написать отклик.</a>
 
+<hr>
+   {% if article_resp %}
+            <table>
+           <tr>
+               <td>Автор отклика</td>
+               <td>Текст</td>
+               <td>Объявление</td>
+               <td>Дата</td>
+               <td>Действия</td>
+               <td>Cтатус</td>
+           </tr>
+
+           {% for response in article_resp %}
+           <tr>
+               <td>{{ response.responseAuthor }}</td>
+               <td>{{ response.text|truncatewords:5 }}</td>
+               <td>{{ response.article.title }}</td>
+               <td>{{ response.dateCreation }}</td>
+               <td>
+                    <a href="{% url 'response' pk=response.id %}">Открыть</a>
+               </td>
+
+                    {% if response.status %}
+                        <td><h4>принят</h4></td>
+                    {% else %}
+                         <td><h4>не принят</h4></td>
+                    {% endif %}
+
+           </tr>
+           {% endfor %}
+
+           <hr>
+
+       </table>
+   {% else %}
+       <h5>Откликов нет!</h5>
+   {% endif %}
+<hr>
+
 {% endblock content %}

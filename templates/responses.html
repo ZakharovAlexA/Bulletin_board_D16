@@ -22,8 +22,10 @@
            {% for response in myresp %}
            <tr>
                <td>{{ response.responseAuthor }}</td>
-               <td>{{ response.text|truncatewords:2 }}</td>
-               <td>{{ response.article.title }}</td>
+               <td>{{ response.text|truncatewords:5 }}</td>
+               <td>
+                   <a href="{% url 'article' pk=response.article.id %}">{{ response.article.title }}</a>
+               </td>
                <td>{{ response.dateCreation }}</td>
                <td>
                     <a href="{% url 'response' pk=response.id %}">Открыть</a>
